@@ -1,5 +1,7 @@
 package com.example.com.androidmultimedia;
 
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,8 +20,11 @@ import com.firebase.ui.FirebaseListAdapter;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements LocationListener
 {
+    Location loc;
+    String lat;
+    String lng;
     Firebase mainRef;
     Firebase usersRef;
     private String uri_database = "https://uridatabase.firebaseio.com/";
@@ -49,7 +54,8 @@ public class MainActivity extends AppCompatActivity
     }
     public void readFromFirebase()
     {
-        mainRef.addValueEventListener(new ValueEventListener() {
+        mainRef.addValueEventListener(new ValueEventListener()
+        {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 snapshot.getValue().toString();
@@ -66,7 +72,6 @@ public class MainActivity extends AppCompatActivity
     public void populateListView()
     {
         ListView list = (ListView) this.findViewById(R.id.LVlist);
-
         mainRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -75,7 +80,6 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
         });
 
@@ -86,8 +90,8 @@ public class MainActivity extends AppCompatActivity
             protected void populateView(View v, User model, int position)
             {
                 super.populateView(v, model, position);
-                ((TextView)v.findViewById(android.R.id.text1)).setText(model.getFullName());
-                ((TextView)v.findViewById(android.R.id.text2)).setText(String.valueOf(model.getBirthYear()));
+                ((TextView)v.findViewById(android.R.id.text1)).setText(lat);//model.getFullName()
+                ((TextView)v.findViewById(android.R.id.text2)).setText(lng);//model.getBirthDate()
             }
         };
         list.setAdapter(adapter);
@@ -100,7 +104,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
        configFirebase();
        writeOnFirebase();
@@ -127,5 +130,34 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onLocationChanged(Location location)
+    {
+        if (location==null){}
+        else
+        {
+            lat = String.valueOf(loc.getLatitude());
+            lng = String.valueOf(loc.getLongitude());
+
+            loc = location;
+        }
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
