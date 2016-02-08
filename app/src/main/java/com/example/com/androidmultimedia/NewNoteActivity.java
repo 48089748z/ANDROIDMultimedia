@@ -31,7 +31,7 @@ public class NewNoteActivity extends AppCompatActivity implements LocationListen
     public void onStart()
     {
         super.onStart();
-        dialog = ProgressDialog.show(this, "LOCATING ...", "Please wait a few seconds ...");
+        dialog = ProgressDialog.show(this, "TURN ON YOUR GPS PLEASE ...", "We are trying to get your location for the note.");
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
 

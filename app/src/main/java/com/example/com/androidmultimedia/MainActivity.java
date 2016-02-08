@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity
             {
                 super.populateView(v, model, position);
                 ((TextView)v.findViewById(android.R.id.text1)).setText(model.getTitle().toUpperCase()+"\nLat: "+model.getLat()+"\nLng: "+model.getLng());
-                ((TextView)v.findViewById(android.R.id.text2)).setText("\n"+model.getDesc());
+                ((TextView)v.findViewById(android.R.id.text2)).setText(model.getDesc());
             }
         };
         list.setAdapter(adapter);
