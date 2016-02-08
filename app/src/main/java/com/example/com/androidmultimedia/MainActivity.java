@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener
         users.add(new User("Alejandro Soriano",1993));
         users.add(new User("Sergi Barjola", 1995));
 
-
         for (int x=0; x<users.size(); x++)
         {
             Firebase user = usersRef.push();
